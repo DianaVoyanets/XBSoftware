@@ -1,0 +1,15 @@
+.webix_el_button button {
+   border:0;
+}
+
+.style_template {
+    text-align: center;
+}
+
+.data_table {
+    width: 800px !important;
+}
+
+.side_style {
+    background-color: rgb(236, 235, 235);
+}
