@@ -15,7 +15,7 @@ var side = {
   rows:[ 
     {
       view:"list",
-      css: "side_style",
+      css:"side_style",
       scroll:false,
       width:200,
       height: 500,
@@ -25,12 +25,12 @@ var side = {
 };
 
 var small_film_set = [
-	{ id:1, title:"The Shawshank Redemption", year:1994, votes:678790, rating:9.2, rank:1},
-	{ id:2, title:"The Godfather", year:1972, votes:511495, rating:9.2, rank:2},
-	{ id:3, title:"The Godfather: Part II", year:1974, votes:319352, rating:9, rank:3},
-	{ id:4, title:"The Good, the Bad and the Ugly", year:1966, votes:213030, rating:8.9, rank:4},
-	{ id:5, title:"My Fair Lady", year:1964, votes:533848, rating:8.9, rank:5},
-	{ id:6, title:"12 Angry Men", year:1957, votes:164558, rating:8.9, rank:6}
+	{ title:"The Shawshank Redemption", year:1994, votes:678790, rating:9.2, rank:1},
+	{ title:"The Godfather", year:1972, votes:511495, rating:9.2, rank:2},
+	{ title:"The Godfather: Part II", year:1974, votes:319352, rating:9, rank:3},
+	{ title:"The Good, the Bad and the Ugly", year:1966, votes:213030, rating:8.9, rank:4},
+	{ title:"My Fair Lady", year:1964, votes:533848, rating:8.9, rank:5},
+	{ title:"12 Angry Men", year:1957, votes:164558, rating:8.9, rank:6}
 ];
 
 var dataTable = {
@@ -53,12 +53,12 @@ var form = {
   view:"form",  
   width:300,
   rows: [
-    { template: "EDIT FILMS", type: "section" },
+    { template:"EDIT FILMS", type: "section" },
     { view:"text", label:"Title",},
     { view:"text", label:"Year",},
     { view:"text", label:"Rating",},
     { view:"text", label:"Votes",},
-    { margin:6, 
+    { margin:3, 
       cols:
       [
         { view:"button", value:"Add new" , type:"form"},
@@ -78,5 +78,5 @@ var footer = {
 };
 
 webix.ui({
-    rows: [header, main, footer]
+  rows: [header, main, footer]
 });
