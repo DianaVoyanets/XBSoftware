@@ -1,27 +1,21 @@
 var link = "<a href='https://webix.com/'>https://webix.com/.</a>"
 
 var header = {
-  rows:[
-    { view:"toolbar",
-    cols:[
-        { view: "label", label: "My App"},
-        { view: "button", type:"icon", icon:"user", label:"Profile",width: 100 },
-      ]
-    }
-  ]
+  view:"toolbar",
+  elements: [
+    { view:"label", label:"My App",id:"toolbar_label"},
+    { view:"button", type:"icon", icon:"user", label:"Profile", width: 100, id:"toolbar_button"},
+  ] 
 };
 
 var side = { 
-  rows:[ 
-    {
-      view:"list",
-      css:"side_style",
-      scroll:false,
-      width:200,
-      height: 500,
-      data:[ "Dashbors", "Users", "Products", "Locations"],
-    },
-  ]
+  view:"list",
+  css:"side_style",
+  scroll:false,
+  width:200,
+  height:500,
+  id:"side_list",
+  data:["Dashbors", "Users", "Products", "Locations"],
 };
 
 var small_film_set = [
@@ -50,8 +44,9 @@ var dataTable = {
 };
 
 var form = {
-  view:"form",  
-  width:300,
+  view:"form", 
+  id:"form", 
+  width: 300,
   rows: [
     { template:"EDIT FILMS", type: "section" },
     { view:"text", label:"Title",},
@@ -73,8 +68,9 @@ var main = {
 };
 
 var footer = {
-  css: "style_template",
-  template: "The software is provided by" + ' ' + link + ' ' + "All rights reserved(c).",
+  template:"The software is provided by" + ' ' + link + ' ' + "All rights reserved(c).",
+  css:"style_template",
+  id: "footer"
 };
 
 webix.ui({
