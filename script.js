@@ -17,7 +17,7 @@ var side = {
     data:["Dashbors", "Users", "Products", "Locations"],
     css:"side_style"
   },
-  {template:"<span class='webix_icon fa-check'>Connected</span>",height:40,css:"side_style"},
+  { template:"<span class='webix_icon fa-check'>Connected</span>",height:40,css:"side_style" },
 ]  
 };
 
@@ -46,12 +46,12 @@ var form = {
     { view:"text", label:"Title",name:"title",invalidMessage:"'title' must be filled in"},
     { view:"text", label:"Year",name:"year",invalidMessage:"'year' should be between 1970 and current "},
     { view:"text", label:"Rating",name:"rating",invalidMessage:"Enter year between 1990 and 2015"},
-    { view:"text", label:"Votes",name:"votes",invalidMessage:"must be less than 100000"},
+    { view:"text", label:"Votes",name:"votes",invalidMessage:"votes must be less than 100000"},
     { margin:3, 
       cols:
       [
         { view:"button", value:"Add new", type:"form", click:function() {
-          if($$('myform').validate()){
+          if($$('myform').validate()) {
             var item = $$('myform').getValues();
             $$('mydata').add(item);
             webix.message("All is correct");
@@ -59,7 +59,6 @@ var form = {
           else {
             webix.message({ type:"error", text:"Form data is invalid" });
           }
-
         }},
         { view:"button", value:"Clear",click: function() {
           webix.confirm({
@@ -75,19 +74,13 @@ var form = {
         },
       ]
     },
-    { view: "spacer"}
+    {view: "spacer"}
   ],
   rules:{
     title: webix.rules.isNotEmpty,
-    year: function(value) {
-      return value > 1970;
-    },
-    rating: function(value) {
-      return value < 100000;
-    },
-    votes: function(value) {
-      return value !=0 && webix.rules.isNotEmpty(value)
-    }
+    year: (value) => value > 1970,
+    rating: (value) =>  value < 100000,
+    votes: (value) => value !=0 && webix.rules.isNotEmpty(value)
   },
 };
 
