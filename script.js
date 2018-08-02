@@ -12,26 +12,19 @@ var side = {
   view:"list",
   css:"side_style",
   scroll:false,
-  width:200,
+  gravity: 1,
   height:500,
   id:"side_list",
   data:["Dashbors", "Users", "Products", "Locations"],
 };
 
-var small_film_set = [
-	{ title:"The Shawshank Redemption", year:1994, votes:678790, rating:9.2, rank:1},
-	{ title:"The Godfather", year:1972, votes:511495, rating:9.2, rank:2},
-	{ title:"The Godfather: Part II", year:1974, votes:319352, rating:9, rank:3},
-	{ title:"The Good, the Bad and the Ugly", year:1966, votes:213030, rating:8.9, rank:4},
-	{ title:"My Fair Lady", year:1964, votes:533848, rating:8.9, rank:5},
-	{ title:"12 Angry Men", year:1957, votes:164558, rating:8.9, rank:6}
-];
-
 var dataTable = {
   view:"datatable",
   id:"table",
   autoConfig:"true",
+  autoheight: true,
   css:"data_table",
+  gravity: 4,
   columns:[
       { id:"title",   header:"Title",      width:250},
       { id:"year",    header:"Released",   width:130},
@@ -40,13 +33,13 @@ var dataTable = {
       { id:"rank",    header:"Rank",       width:130},
   ],
   areaselect: true,        
-  data: small_film_set
+  data: small_film_set,
 };
 
 var form = {
   view:"form", 
   id:"form", 
-  width: 300,
+  gravity: 1.5,
   rows: [
     { template:"EDIT FILMS", type: "section" },
     { view:"text", label:"Title",},
