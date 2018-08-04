@@ -1,0 +1,42 @@
+.style_template {
+    text-align: center;
+}
+
+.side_style {
+    background-color: rgb(247, 245, 245);
+}
+
+.fa-check.webix_icon {
+    color: green;
+    margin-left: 40px;
+}
+
+.fa-pencil {
+    margin-left: 20px;
+} 
+
+.title {
+    background-color: #d2e3ef;
+}
+
+.myhover {
+    background-color: orange;
+}
+
+.delete_button {
+    width:70px;
+    text-align: center;
+    font-weight:bold;
+    float:right;
+    background-color:#444;
+    color:white;
+    border-radius:3px;
+}
+
+.style_ list {
+    background-color: green;
+}
+ 
+.green {
+    background-color: lightgreen;
+} 
