@@ -156,7 +156,7 @@ var products = {
   select: true,
   columns:[
     { id:"id",  header:"", css:{"text-align":"right"},width:50},
-    { id:"title",	header:"Title",	width:250,template:"{common.treetable()} #title#"},
+    { id:"title",	header:"Title",	width:250,template:"{common.treetable()} #title#",fillspace:true},
     { id:"price",	header:"Price",	width:200}
   ],
   url:"data/products.js",
