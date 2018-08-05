@@ -1,4 +1,5 @@
 var link = "<a href='https://webix.com/'>https://webix.com/.</a>"
+var information = "#id#. " + "<strong>#name#</strong>" + " " + "from" + " " + "#country#";
 
 var header = {
   view:"toolbar",
@@ -16,7 +17,7 @@ var side = {
     scroll:false,
     select:true,
       on:{
-      	onAfterSelect:function(id){ 
+      	onAfterSelect:function(id) { 
         	$$(id).show();
         }
       },
@@ -123,7 +124,7 @@ var users = {
   id: "list",
   select: true,
   url: "data/users.js",
-  template: "#id#. " + "#name#" + " " + "from" + " " + "#country#" + "<span class='delete_button'>Delete</span>",
+  template: information + "<span class='delete_button'>Delete</span>",
   onClick: {
     "delete_button":function(e, id) {
     	this.remove(id);
@@ -140,7 +141,7 @@ var users = {
       label:"#age#",
       barWidth:35,
       xAxis:{
-        template:"",
+        template:"#age#",
         title: "Year"
       },
       url: "data/users.js",
