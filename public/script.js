@@ -134,7 +134,6 @@ var users = {
 }, 
   {cols:[
     {
-      width: 700,
       view:"chart",
       type:"bar",
       value: "#age#",
