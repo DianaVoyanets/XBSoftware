@@ -42,7 +42,7 @@ var dataTable = {
       { id:"rating",header:["Rating",{content:"numberFilter"}],width:80,sort:"int"},
       { id:"votes",header:["Votes",{content:"numberFilter"}],width:80,sort:"int"},
       { id:"rank",header:["Rank",{content:"numberFilter"}], width:80,sort:"int"},
-      { id:"category", header: "Category", width: 80},
+      { id:"categoryId",header: "Category",data: data,collection:film_collection,width: 80},
       { id:"icon",header:"",width: 50,template: "{common.trashIcon()}"},
 
   ],
