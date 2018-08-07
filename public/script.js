@@ -1,6 +1,14 @@
 var link = "<a href='https://webix.com/'>https://webix.com/.</a>"
 var information = "#id#. " + "<strong>#name#</strong>" + " " + "from" + " " + "#country#";
 
+var categories_collection = new webix.DataCollection({
+  url: "data/categories.js"
+});
+
+var users_collection = new webix.DataCollection({
+  url: "data/users.js"
+});
+
 var header = {
   view:"toolbar",
   elements: [
@@ -21,7 +29,7 @@ var side = {
         	$$(id).show();
         }
       },
-    data:["Dashboard", "Users", "Products", "Locations"],
+    data:["Dashboard", "Users", "Products", "Admin"],
     css:"side_style"
   },
   { template:"<span class='webix_icon fa-check'>Connected</span>",height:40,css:"side_style" }
@@ -29,57 +37,70 @@ var side = {
 };
 
 var dataTable = {
-  view:"datatable",
-  id:"mydata",
-  css:"data_table",
-  select: true,
-  gravity: 3,
-  url: "data/data.js",
-  columns:[
+  rows: [{
+       view:"tabbar", 
+        id:"tabbar",
+        width:800,
+        options:[ 
+            { id:"all", value: "All" },
+            { id:"old_button", value: "Old" },
+            { id:"modern_button",value: "Modern" },
+            { id:"new_button", value: "New" },
+        ],
+          on:{
+            onChange:function() {
+              $$("mydata").filterByAll();
+            }
+        },
+      },
+    {
+      view:"datatable",
+      id:"mydata",
+      css:"data_table",
+      save:"rest->https://docs.webix.com/samples/40_serverside/03_php_custom/server/datatable_rest.php",
+      gravity: 4,
+      url: "data/data.js",
+      columns:[
       { id:"id",header:"", width:50,sort:"int",css:"style_id"},
-      { id:"title",header:["Title",{content:"textFilter"}], width:250,sort:"string"},
-      { id:"year",header:"Year",width:90,sort:"int"},
-      { id:"rating",header:["Rating",{content:"numberFilter"}],width:80,sort:"int"},
-      { id:"votes",header:["Votes",{content:"numberFilter"}],width:80,sort:"int"},
-      { id:"rank",header:["Rank",{content:"numberFilter"}], width:80,sort:"int"},
-      { id:"categoryId",header: "Category",collection:film_categories,width: 80},
-      { id:"icon",header:"",width: 50,template: "{common.trashIcon()}"},
-
-  ],
+      { id:"title",header:["Title",{content:"textFilter"}],width:110,sort:"string"},
+      { id:"year",header:"Year",width:110,sort:"int"},
+      { id:"rating",header:["Rating",{content:"numberFilter"}],width:110,sort:"int"},
+      { id:"votes",header:["Votes",{content:"numberFilter"}],width:110,sort:"int"},
+      { id:"rank",header:["Rank",{content:"numberFilter"}],width:110, sort:"int"},
+      { id:"categoryId",header: "Category",collection: categories_collection,width: 110},
+      { id:"icon",header:"",template: "{common.trashIcon()}"},
+    ],
+  hover:"myhover",
+  select: true,
+  editable:true,
   scheme:{
     $init:function(obj) {
-     obj.categoryId = getRandom(1,5);
+      obj.votes = obj.votes.replace(/,/, '.');
+      obj.categoryId = getRandom(1,5);
+      },
     },
-  },
-  hover:"myhover",
-  onClick:{
+  onClick: {
   	"fa-trash":function(e, id) {
-    	this.remove(id);
-      	return false;
-    },
+          this.remove(id);
+      	  return false;
+      }
+   }
   }
-};
-
-var tabview = {
-  view: "tabview",
-  width: 800,
-  id: "tabview",
-  cells: [
-    {header: "All",body:dataTable,id: "all_tab"},
-    {header: "Old", id: "old_tab"},
-    {header: "Modern", id: "modern_tab"},
-],
+ ],
 };
 
 var form = {
   view:"form", 
   id:"myform", 
+  editable:true,
+  select: true,
   elements: [
     { template:"edit films", type: "section" },
     { view:"text", label:"Title",name:"title",invalidMessage:"'title' must be filled in"},
     { view:"text", label:"Year",name:"year",invalidMessage:"'year' should be between 1970 and current "},
     { view:"text", label:"Rating",name:"rating",invalidMessage:"rating cannot be empty or 0"},
     { view:"text", label:"Votes",name:"votes",invalidMessage:"votes must be less than 100000"},
+    { view:"richselect",label: "Category",name:"category",options:{data: categories_collection}},
     { margin:3, 
       rows: [
         { view:"button", value:"Save", type:"form", click:function() {
@@ -130,8 +151,7 @@ var users = {
         $$("list").sort('#age#',"desc");
       }},
       { view: "button",value: "Add user",width: 100,id:"add_button",click: function() {
-        var userId = $$("list").getLastId() + 1;
-        $$("list").add({"id": userId, "name":"Alan Smith","age":57, "country":"USA"})
+        $$("list").add({"name":"Alan Smith","age":57, "country":"USA"})
       }}
 
     ],
@@ -140,7 +160,6 @@ var users = {
   view: "list",
   id: "list",
   view: "editlist",
-  url: "data/users.js",
   editable:true,
 	editor:"text",
   editValue:"name",
@@ -155,7 +174,7 @@ var users = {
       	return false;
     },
   },
-  scheme:{
+  scheme: {
     $init:function(obj) {
       if(obj.age < 26) {
         obj.$css = "highlight";
@@ -163,7 +182,7 @@ var users = {
     },
   },
 },
-{cols:[
+{ cols:[
     {
       view:"chart",
       type:"bar",
@@ -186,7 +205,7 @@ var products = {
   id: "treetable",
   select: true,
   editable: true,
-  columns:[
+  columns: [
     { id:"id",  header:"", css:{"text-align":"right"},width:50},
     { id:"title",	header:"Title",	width:250,template:"{common.treetable()} #title#",fillspace:true,editor:"text"},
     { id:"price",	header:"Price",	width:200,editor:"text"}
@@ -198,12 +217,36 @@ var products = {
   url:"data/products.js",
 };
 
+var categories = {
+  rows: [
+    {
+      editable: true,
+      select: true,
+      view: "datatable",
+      id: "categories_table",
+      columns: [
+        { id:"id",header:""},
+        { id:"value",header:"Title",editor:"text"},
+      ]
+    },
+    { view: "button",value: "Add new",click: function() {
+      $$("categories_table").add({
+        value:"Biography"
+      },0);
+    }},
+    { view: "button",value: "Delete selected",click: function() {
+      var sel = $$("categories_table").getSelectedId();
+          if(sel) categories_collection.remove(sel);
+    }},
+ ]
+};
+
 var main = {
   cells:[ 
-  	{ id:"Dashboard", cols:[tabview,form]},
+  	{ id:"Dashboard", cols:[dataTable,form]},
     { id:"Users", cols:[users] },
     { id:"Products",cols:[products]},
-    { id:"Locations", template:"Locations view"},
+    { id:"Admin", cols:[categories]},
   ]
 };
 
@@ -249,7 +292,7 @@ function getRandom(min, max) {
   return Math.floor(rand);
 };
 
-$$("chart").sync($$("list"),function(){
+$$("chart").sync($$("list"),function() {
   this.group({
     by:"country",
     map:{
@@ -258,3 +301,26 @@ $$("chart").sync($$("list"),function(){
 });
 });
 
+$$("mydata").registerFilter(
+  $$("tabbar"), 
+  { columnId:"year", compare:function(value, filter, item) {
+    switch(filter) {
+      case "old_button": return value < 1990;
+      case "new_button": return value > 2010;
+      case "modern_button": return value > 1990 && value < 2010;
+      default: return value;
+    }
+   } 
+  },
+  { 
+    getValue:function(node){
+      return node.getValue();
+    },
+    setValue:function(node, value){
+      node.setValue(value);
+    }
+  }
+);
+
+$$("list").sync(users_collection);
+$$("categories_table").sync(categories_collection);
