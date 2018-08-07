@@ -73,18 +73,25 @@ var dataTable = {
   hover:"myhover",
   select: true,
   editable:true,
-  scheme:{
+  scheme: {
     $init:function(obj) {
       obj.votes = obj.votes.replace(/,/, '.');
       obj.categoryId = getRandom(1,5);
       },
-    },
+  },
   onClick: {
   	"fa-trash":function(e, id) {
-          this.remove(id);
-      	  return false;
+      webix.confirm({
+        text:"Do you still want to clear field?",
+        callback: function(result) {
+          if(result) {
+            $$("mydata").remove(id);
+      	      return false;
+           }
+          }
+        })
       }
-   }
+    }
   }
  ],
 };
@@ -161,6 +168,7 @@ var users = {
   id: "list",
   view: "editlist",
   editable:true,
+  select: true,
 	editor:"text",
   editValue:"name",
   rules: {
@@ -170,8 +178,15 @@ var users = {
   template: information + "<span class='delete_button'>Delete</span>",
   onClick: {
     "delete_button":function(e,id) {
-        this.remove(id) 
-          return false;
+      webix.confirm({
+        text: "Do you still want to clear field?",
+        callback: function(result) {
+          if(result) {
+          $$("list").remove(id) 
+            return false;
+          }
+        }
+      })
     }
   },
   scheme: {
