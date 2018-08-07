@@ -169,10 +169,10 @@ var users = {
   select: true,
   template: information + "<span class='delete_button'>Delete</span>",
   onClick: {
-    "delete_button":function(e, id) {
-    	this.remove(id);
-      	return false;
-    },
+    "delete_button":function(e,id) {
+        this.remove(id) 
+          return false;
+    }
   },
   scheme: {
     $init:function(obj) {
@@ -230,8 +230,8 @@ var categories = {
       ]
     },
     { view: "button",value: "Add new",click: function() {
-      $$("categories_table").add({
-        value:"Biography"
+      categories_collection.add({
+        value:"Biography",
       },0);
     }},
     { view: "button",value: "Delete selected",click: function() {
@@ -313,7 +313,7 @@ $$("mydata").registerFilter(
    } 
   },
   { 
-    getValue:function(node){
+    getValue:function(node) {
       return node.getValue();
     },
     setValue:function(node, value){
