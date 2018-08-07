@@ -36,7 +36,15 @@
 .style_ list {
     background-color: green;
 }
- 
+
 .green {
     background-color: lightgreen;
 } 
+
+.style_id {
+    background-color: #d2e3ef
+}
+
+.highlight {
+    background-color: yellow;
+}
